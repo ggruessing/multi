@@ -22,6 +22,19 @@
 
   var currentPlayers = 0
 
+  var oneGo =false
+
+  var twoGo =false
+
+  var match = "none"
+
+  var choiceOne = ""
+
+  var choiceTwo = ""
+
+  var oneWins = 0
+
+  var twoWins = 0
 
   var connected = database.ref(".info/connected")
 
@@ -80,21 +93,82 @@ $(document).on("click" , "#submit" , function(event){
     keys.push(shot.getKey())
 })
   pOne.on("value" , function(shot){
-    $("#titleOne").text('Player One: '+shot.val().name)
-      
+    $("#titleOne").text('Player One: '+shot.val().name+'Wins: '+shot.val().wins)
+    oneGo= shot.val().go
+    choiceOne= shot.val().choice
   })
 
   pTwo.on("value" , function(shot){
-    $("#titleTwo").text('Player Two: '+shot.val().name)
-      
+    $("#titleTwo").text('Player Two: '+shot.val().name+'Wins: '+shot.val().wins)
+     twoGo= shot.val().go 
+     choiceTwo= shot.val().choice
   })
 $(document).on("click" , ".playOne" , function(){
   
   console.log(this.id)
+  
   database.ref('playerOne').update({
-    choice: this.id
+    choice: this.id,
+    go: true
+  })
+})
+$(document).on("click" , ".playTwo" , function(){
+  
+  console.log(this.id)
+  
+  database.ref('playerTwo').update({
+    choice: this.id,
+    go: true
   })
 })
 
+pTwo.on("value" , function(shot){
+if ((oneGo)&&(twoGo)){
+  
+  $("#match").html("GAME ON MOTHAFUCKA")
 
+  if (((choiceOne==="rock")&&(choiceTwo==="scissors"))||((choiceOne==="paper")&&(choiceTwo==="rock"))||((choiceOne==="scissors")&&(choiceTwo==="paper"))){
+    $("#match").html("ONE WINS")
+    oneWins++
+    database.ref('playerOne').update({
+    choice: "",
+    go: false,
+    wins: oneWins
+  })
+  database.ref('playerTwo').update({
+    choice: "",
+    go: false,
+    losses: oneWins,
+  })
+  }
+else if (((choiceTwo==="rock")&&(choiceOne==="scissors"))||((choiceTwo==="paper")&&(choiceOne==="rock"))||((choiceTwo==="scissors")&&(choiceOne==="paper"))){
+    $("#match").html("TWO WINS")
+    twoWins++
+    database.ref('playerOne').update({
+    choice: "",
+    go: false,
+    losses: twoWins,
+  })
+  database.ref('playerTwo').update({
+    choice: "",
+    go: false,
+    wins: twoWins,
+  })
+  }
+else if (choiceOne===choiceTwo){
+  $("#match").html("Tie")
+  database.ref('playerOne').update({
+    choice: "",
+    go: false,
+  })
+  database.ref('playerTwo').update({
+    choice: "",
+    go: false,
+  })
+}
+
+
+
+}
+})
 
