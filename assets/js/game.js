@@ -93,13 +93,13 @@ $(document).on("click" , "#submit" , function(event){
     keys.push(shot.getKey())
 })
   pOne.on("value" , function(shot){
-    $("#titleOne").text('Player One: '+shot.val().name+'Wins: '+shot.val().wins)
+    $("#titleOne").text('Player One: '+shot.val().name+' Wins: '+shot.val().wins)
     oneGo= shot.val().go
     choiceOne= shot.val().choice
   })
 
   pTwo.on("value" , function(shot){
-    $("#titleTwo").text('Player Two: '+shot.val().name+'Wins: '+shot.val().wins)
+    $("#titleTwo").text('Player Two: '+shot.val().name+' Wins: '+shot.val().wins)
      twoGo= shot.val().go 
      choiceTwo= shot.val().choice
   })
@@ -128,7 +128,7 @@ if ((oneGo)&&(twoGo)){
   $("#match").html("GAME ON MOTHAFUCKA")
 
   if (((choiceOne==="rock")&&(choiceTwo==="scissors"))||((choiceOne==="paper")&&(choiceTwo==="rock"))||((choiceOne==="scissors")&&(choiceTwo==="paper"))){
-    $("#match").html("ONE WINS")
+    $("#match").html("Player One Picked: "+choiceOne+"<br>Player Two Picked: "+choiceTwo+"<br>ONE WINS")
     oneWins++
     database.ref('playerOne').update({
     choice: "",
@@ -142,7 +142,7 @@ if ((oneGo)&&(twoGo)){
   })
   }
 else if (((choiceTwo==="rock")&&(choiceOne==="scissors"))||((choiceTwo==="paper")&&(choiceOne==="rock"))||((choiceTwo==="scissors")&&(choiceOne==="paper"))){
-    $("#match").html("TWO WINS")
+    $("#match").html("Player One Picked: "+choiceOne+"<br>Player Two Picked: "+choiceTwo+"<br>TWO WINS")
     twoWins++
     database.ref('playerOne').update({
     choice: "",
@@ -156,7 +156,7 @@ else if (((choiceTwo==="rock")&&(choiceOne==="scissors"))||((choiceTwo==="paper"
   })
   }
 else if (choiceOne===choiceTwo){
-  $("#match").html("Tie")
+  $("#match").html("Player One Picked: "+choiceOne+"<br>Player Two Picked: "+choiceTwo+"<br>TIEEEEE")
   database.ref('playerOne').update({
     choice: "",
     go: false,
