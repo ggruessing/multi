@@ -125,7 +125,7 @@ $(document).on("click" , ".playTwo" , function(){
 pTwo.on("value" , function(shot){
 if ((oneGo)&&(twoGo)){
   
-  $("#match").html("GAME ON MOTHAFUCKA")
+  $("#match").html("GAME ON")
 
   if (((choiceOne==="rock")&&(choiceTwo==="scissors"))||((choiceOne==="paper")&&(choiceTwo==="rock"))||((choiceOne==="scissors")&&(choiceTwo==="paper"))){
     $("#match").html("Player One Picked: "+choiceOne+"<br>Player Two Picked: "+choiceTwo+"<br>ONE WINS")
